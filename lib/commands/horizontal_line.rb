@@ -7,11 +7,9 @@ module Commands
     end
 
     def valid?
-      split_input = input.split(' ')
-      return false unless split_input.count == 5
-      _letter, start, stop, row, colour = split_input
-      CoordinateValidator.new(start, row, current_image).valid? &&
-        CoordinateValidator.new(stop, row, current_image).valid? &&
+      return false unless input.split(' ').count == 5
+      _letter, start, stop, row, colour = input.split(' ')
+      [start, stop].all? { |x| CoordinateValidator.new(x, row, current_image).valid? } &&
         ACCEPTED_COLOURS.include?(colour) && current_image
     end
 
@@ -24,9 +22,13 @@ module Commands
     end
 
     def update_image
-      current_image[row.to_i-1].each_with_index do |_pixel, index|
-        current_image[row.to_i-1][index] = colour if ((start.to_i-1)..(stop.to_i-1)).to_a.include?(index)
+      current_image[row.to_i-1].each_with_index do |_i, index|
+        current_image[row.to_i-1][index] = colour if range.include?(index)
       end
+    end
+
+    def range
+      ((start.to_i-1)..(stop.to_i-1)).to_a
     end
   end
 end

@@ -7,9 +7,8 @@ module Commands
     end
 
     def valid?
-      split_input = input.split(' ')
-      return false unless split_input.count == 4
-      x, y, colour = split_input[1], split_input[2], split_input[3]
+      return false unless input.split(' ').count == 4
+      _letter, x, y, colour = input.split(' ')
       CoordinateValidator.new(x, y, current_image).valid? &&
         ACCEPTED_COLOURS.include?(colour) && current_image
     end
@@ -19,12 +18,11 @@ module Commands
     attr_reader :x, :y, :colour
 
     def set_coordinates_and_colour
-      split_input = input.split(' ')
-      @x, @y, @colour = split_input[1].to_i, split_input[2].to_i, split_input[3]
+      _letter, @x, @y, @colour = input.split(' ')
     end
 
     def update_image
-      current_image[y-1][x-1] = colour
+      current_image[y.to_i-1][x.to_i-1] = colour
     end
   end
 end

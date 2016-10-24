@@ -2,23 +2,25 @@ module Commands
   class NewImage < Base
     def process
       set_coordinates
-      { image: Array.new(y.to_i) { Array.new(x.to_i, STARTING_COLOUR) } }
+      { image: new_image }
     end
 
     def valid?
-      split_input = input.split(' ')
-      return false unless split_input.count == 3
-      x, y = split_input[1], split_input[2]
+      return false unless input.split(' ').count == 3
+      _letter, x, y = input.split(' ')
       CoordinateValidator.new(x, y).valid?
     end
 
     private
 
+    attr_reader :x, :y
+
     def set_coordinates
-      split_input = input.split(' ')
-      @x, @y = split_input[1], split_input[2]
+      _letter, @x, @y = input.split(' ')
     end
 
-    attr_reader :x, :y
+    def new_image
+      Array.new(y.to_i) { Array.new(x.to_i, STARTING_COLOUR) }
+    end
   end
 end
