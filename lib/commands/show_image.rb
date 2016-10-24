@@ -5,7 +5,7 @@ module Commands
     end
 
     def valid?
-      input.length == 1
+      input.length == 1 && current_image
     end
 
     private

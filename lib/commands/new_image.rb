@@ -1,19 +1,23 @@
 module Commands
   class NewImage < Base
-    STARTING_COLOUR = 'O'.freeze
-
     def process
-      { image: Array.new(y) { Array.new(x, STARTING_COLOUR) } }
+      set_coordinates
+      { image: Array.new(y.to_i) { Array.new(x.to_i, STARTING_COLOUR) } }
     end
 
     def valid?
       split_input = input.split(' ')
       return false unless split_input.count == 3
-      @x, @y = split_input[1].to_i, split_input[2].to_i
-      @x <= 250 && @x >= 1 && @y <= 250 && @y >= 1
+      x, y = split_input[1], split_input[2]
+      CoordinateValidator.new(x, y).valid?
     end
 
     private
+
+    def set_coordinates
+      split_input = input.split(' ')
+      @x, @y = split_input[1], split_input[2]
+    end
 
     attr_reader :x, :y
   end

@@ -24,6 +24,13 @@ RSpec.describe BitmapEditor do
         subject.run
       end
     end
+
+    context "'I' creates image" do
+      let(:input) { "I 3 4\nX" } do
+        expect(STDOUT).to receive(:puts).with('type ? for help')
+        subject.run
+      end
+    end
     context "'?' for help" do
       let(:input) { "?\nX" }
       it "user input ('?') is shown command help" do

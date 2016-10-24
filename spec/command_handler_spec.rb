@@ -31,4 +31,10 @@ S - Show the contents of the current image
 X - Terminate the session"
     end
   end
+  context "I" do
+  let(:command) { 'I 3 4' }
+    it "returns image" do
+      expect(subject[:image]).to eq [%w(O O O), %w(O O O), %w(O O O), %w(O O O )]
+    end
+  end
 end
