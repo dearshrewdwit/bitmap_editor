@@ -1,4 +1,7 @@
 class BitmapEditor
+  def initialize
+    @image_state = ImageState.new
+  end
 
   def run
     @running = true
@@ -6,9 +9,10 @@ class BitmapEditor
     while @running
       print '> '
       input = gets.chomp
-      message = CommandHandler.new(input).process
       @running = false if input == 'X'
-      puts message
+      response = CommandHandler.new(input, image_state.current_image).process
+      @image_state.update(response[:image]) if response[:image]
+      puts response[:message] if response[:message]
     end
   end
 end

@@ -1,26 +1,28 @@
 class CommandHandler
-  def initialize(command)
-    @command = command
+  COMMAND_CLASSES = {
+    'I' => Commands::NewImage,
+    'C' => Commands::ClearImage,
+    'L' => Commands::ColourPixel,
+    'V' => Commands::VerticalLine,
+    'H' => Commands::HorizontalLine,
+    'S' => Commands::ShowImage,
+    '?' => Commands::Help,
+    'X' => Commands::Quit,
+  }.freeze
+
+  def initialize(input, current_image)
+    @input = input
+    @current_image = current_image
+    @invalid_command = Commands::Invalid
   end
 
   def process
-    if command == 'X'
-      'goodbye!'
-    elsif command == '?'
-      "? - Help
-I M N - Create a new M x N image with all pixels coloured white (O).
-C - Clears the table, setting all pixels to white (O).
-L X Y C - Colours the pixel (X,Y) with colour C.
-V X Y1 Y2 C - Draw a vertical segment of colour C in column X between rows Y1 and Y2 (inclusive).
-H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
-S - Show the contents of the current image
-X - Terminate the session"
-    else
-      'unrecognised command :('
-    end
+    command = COMMAND_CLASSES.fetch(input.first, invalid_command).new(input, current_image)
+    command = invalid_command unless command.valid?
+    command.process
   end
 
   private
 
-  attr_reader :command
+  attr_reader :input, :invalid_command, :current_image
 end
