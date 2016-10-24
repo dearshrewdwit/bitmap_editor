@@ -5,6 +5,10 @@ module Commands
       @current_image = current_image
     end
 
+    def valid?
+      true
+    end
+
     attr_reader :input, :current_image
   end
 end

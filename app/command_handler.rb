@@ -17,7 +17,7 @@ class CommandHandler
   end
 
   def process
-    command = COMMAND_CLASSES.fetch(input.first, invalid_command).new(input, current_image)
+    command = COMMAND_CLASSES.fetch(input[0], invalid_command).new(input, current_image)
     command = invalid_command unless command.valid?
     command.process
   end
