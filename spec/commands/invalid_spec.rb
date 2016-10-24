@@ -9,4 +9,9 @@ RSpec.describe Commands::Invalid do
       expect(subject.process[:message]).to eq 'unrecognised command :('
     end
   end
+  describe "#valid" do
+    it "returns true by default" do
+      expect(subject).to be_valid
+    end
+  end
 end

@@ -26,8 +26,10 @@ RSpec.describe BitmapEditor do
     end
 
     context "'I' creates image" do
-      let(:input) { "I 3 4\nX" } do
+      let(:input) { "I 3 4\nX" }
+      it "prompts user" do
         expect(STDOUT).to receive(:puts).with('type ? for help')
+        expect(STDOUT).to receive(:puts).with('goodbye!')
         subject.run
       end
     end
