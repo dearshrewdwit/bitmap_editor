@@ -22,7 +22,7 @@ class Image
   end
 
   def vertical_line(x, start, stop, colour)
-    range(start, stop).to_a.each { |y| current_image[y][x] = colour }
+    range(start, stop).each { |y| current_image[y][x] = colour }
   end
 
   def show_image
