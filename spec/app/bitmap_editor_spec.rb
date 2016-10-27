@@ -4,11 +4,11 @@ RSpec.describe BitmapEditor do
   subject { described_class.new }
 
   context "User input" do
-    before { $stdin = StringIO.new(input) }
-    after { $stdin = STDIN }
+    before { allow(STDIN).to receive(:gets).and_return(*input) }
 
     context "'X' to quit" do
-      let(:input) { 'X' }
+      let(:input) { ['X'] }
+
       it "user input ('X') is shown goodbye" do
         expect(STDOUT).to receive(:puts).with('type ? for help')
         expect(STDOUT).to receive(:puts).with('goodbye!')
@@ -16,16 +16,29 @@ RSpec.describe BitmapEditor do
       end
     end
     context "'t' unrecognised command" do
-      let(:input) { "t\nX" }
+      let(:input) { ['t', 'X'] }
+
       it "user input ('t') is shown unrecognised" do
         expect(STDOUT).to receive(:puts).with('type ? for help')
-        expect(STDOUT).to receive(:puts).with('unrecognised command :(')
+        expect(STDOUT).to receive(:puts).with("unrecognised command 't' :(")
         expect(STDOUT).to receive(:puts).with('goodbye!')
         subject.run
       end
     end
+
+    context "'I' creates image" do
+      let(:input) { ["I 3 4", 'X'] }
+
+      it "prompts user" do
+        expect(STDOUT).to receive(:puts).with('type ? for help')
+        expect(STDOUT).to receive(:puts).with('goodbye!')
+        subject.run
+      end
+    end
+
     context "'?' for help" do
-      let(:input) { "?\nX" }
+      let(:input) { ['?', 'X'] }
+
       it "user input ('?') is shown command help" do
         expect(STDOUT).to receive(:puts).with('type ? for help')
         expect(STDOUT).to receive(:puts).with("? - Help
