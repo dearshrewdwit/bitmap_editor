@@ -9,13 +9,13 @@ class CoordinateValidator
   end
 
   def valid?
-    integer_coordinates? && valid_coordinates?
+    numbers_only? && valid_coordinates?
   end
 
   private
 
-  def integer_coordinates?
-    x.to_f == x.to_i && y.to_f == y.to_i
+  def numbers_only?
+    !/\D/.match(x) && !/\D/.match(y)
   end
 
   def valid_coordinates?

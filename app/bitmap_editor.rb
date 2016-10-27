@@ -1,18 +1,23 @@
 class BitmapEditor
-  def initialize
-    @image_state = ImageState.new
+
+  attr_reader :handler
+  def initialize(handler = CommandHandler)
+    @image = Image.new
+    @handler = handler
   end
 
   def run
-    @running = true
+    running = true
     puts 'type ? for help'
-    while @running
+    while running
       print '> '
-      input = gets.chomp
-      @running = false if input == 'X'
-      response = CommandHandler.new(input, @image_state.current_image).process
-      @image_state.update(response[:image]) if response[:image]
-      puts response[:message] if response[:message]
+      input = STDIN.gets.chomp
+      running = false if input == 'X'
+    begin
+      handler.new(input, @image).process
+    rescue BitmapError => e
+      puts e.message
+    end
     end
   end
 end
