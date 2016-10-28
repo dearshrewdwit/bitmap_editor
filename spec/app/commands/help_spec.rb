@@ -16,6 +16,12 @@ X - Terminate the session"
 
   subject { described_class.new(input, image) }
 
+  describe "#required_args" do
+    it "has 0" do
+      expect(described_class.required_args).to eq 0
+    end
+  end
+
   describe "#process" do
     it "returns message" do
       expect { subject.process }.to output("#{message}\n").to_stdout

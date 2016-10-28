@@ -1,26 +1,21 @@
 require 'spec_helper'
 
 RSpec.describe Commands::Quit do
-  let(:input) { 'X' }
+  let(:image) { instance_double("Image") }
+  let(:input) { double(:command) }
+  let(:message) { "goodbye!\n" }
 
-  subject { described_class.new(input) }
+  subject { described_class.new(input, image) }
 
-  describe "#valid" do
-    context "valid input" do
-      it "returns true" do
-        expect(subject).to be_valid
-      end
-    end
-    context "invalid input" do
-    let(:input) { 'Xextra characters' }
-      it "returns false" do
-        expect(subject).to_not be_valid
-      end
+  describe "#required_args" do
+    it "has 0" do
+      expect(described_class.required_args).to eq 0
     end
   end
+
   describe "#process" do
     it "returns message" do
-      expect(subject.process[:message]).to eq 'goodbye!'
+      expect { subject.process }.to output(message).to_stdout
     end
   end
 end

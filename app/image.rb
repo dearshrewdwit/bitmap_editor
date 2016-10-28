@@ -29,8 +29,9 @@ class Image
     puts current_image.map { |row| row.join }
   end
 
+  private
+
   def range(a, b)
-    start, stop = [a,b].sort
-    (start..stop).to_a
+    Range.new(*[a, b].sort)
   end
 end
