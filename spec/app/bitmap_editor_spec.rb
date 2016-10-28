@@ -3,45 +3,75 @@ require 'spec_helper'
 RSpec.describe BitmapEditor do
   subject { described_class.new }
 
-  context "User input" do
-    before { allow(STDIN).to receive(:gets).and_return(*input) }
+  before { allow(STDIN).to receive(:gets).and_return(*input) }
 
-    context "'X' to quit" do
-      let(:input) { ['X'] }
+  context "'X' to quit" do
+    let(:input) { ['X'] }
 
-      it "user input ('X') is shown goodbye" do
-        expect(STDOUT).to receive(:puts).with('type ? for help')
-        expect(STDOUT).to receive(:puts).with('goodbye!')
-        subject.run
-      end
+    it "user input ('X') is shown goodbye" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
     end
-    context "'t' unrecognised command" do
-      let(:input) { ['t', 'X'] }
+  end
 
-      it "user input ('t') is shown unrecognised" do
-        expect(STDOUT).to receive(:puts).with('type ? for help')
-        expect(STDOUT).to receive(:puts).with("unrecognised command 't' :(")
-        expect(STDOUT).to receive(:puts).with('goodbye!')
-        subject.run
-      end
+  context "'t' unrecognised command" do
+    let(:input) { ['t', 'X'] }
+
+    it "user input ('t') is shown unrecognised" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with("unrecognised command 't' :(")
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
     end
+  end
 
-    context "'I' creates image" do
-      let(:input) { ["I 3 4", 'X'] }
+  context "'I' creates image" do
+    let(:input) { ["I 3 4", 'X'] }
 
-      it "prompts user" do
-        expect(STDOUT).to receive(:puts).with('type ? for help')
-        expect(STDOUT).to receive(:puts).with('goodbye!')
-        subject.run
-      end
+    it "does not output to STDOUT" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
     end
+  end
 
-    context "'?' for help" do
-      let(:input) { ['?', 'X'] }
+  context "'L' colours pixel" do
+    let(:input) { ["I 3 3", "L 3 3 P", 'X'] }
 
-      it "user input ('?') is shown command help" do
-        expect(STDOUT).to receive(:puts).with('type ? for help')
-        expect(STDOUT).to receive(:puts).with("? - Help
+    it "does not output to STDOUT" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
+    end
+  end
+
+  context "'L' draws a horizontal_line" do
+    let(:input) { ["I 3 3", "L 3 3 P", 'X'] }
+
+    it "prompts user" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
+    end
+  end
+
+  context "'L' draws a vertical line" do
+    let(:input) { ["I 3 3", "L 3 3 P", 'X'] }
+
+    it "prompts user" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
+    end
+  end
+
+  context "'?' for help" do
+    let(:input) { ['?', 'X'] }
+
+    it "user input ('?') is shown command help" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with("? - Help
 I M N - Create a new M x N image with all pixels coloured white (O).
 C - Clears the table, setting all pixels to white (O).
 L X Y C - Colours the pixel (X,Y) with colour C.
@@ -49,9 +79,8 @@ V X Y1 Y2 C - Draw a vertical segment of colour C in column X between rows Y1 an
 H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
 S - Show the contents of the current image
 X - Terminate the session")
-        expect(STDOUT).to receive(:puts).with('goodbye!')
-        subject.run
-      end
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
     end
   end
 end

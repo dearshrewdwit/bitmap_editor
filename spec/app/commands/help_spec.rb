@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Commands::Help do
   let(:image) { instance_double("Image") }
-  let(:input) { double(:command) }
+  let(:input) { double(:input) }
   let(:message) do
     "? - Help
 I M N - Create a new M x N image with all pixels coloured white (O).
@@ -14,7 +14,7 @@ S - Show the contents of the current image
 X - Terminate the session"
   end
 
-  subject { described_class.new(input, image) }
+  let(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do
     it "has 0" do
@@ -24,7 +24,7 @@ X - Terminate the session"
 
   describe "#process" do
     it "returns message" do
-      expect { subject.process }.to output("#{message}\n").to_stdout
+      expect { command.process }.to output("#{message}\n").to_stdout
     end
   end
 end
