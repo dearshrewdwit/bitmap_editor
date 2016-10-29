@@ -15,7 +15,7 @@ class CoordinateValidator
   private
 
   def numbers_only?
-    !/\D/.match(x) && !/\D/.match(y)
+    !/\D/.match(x+y)
   end
 
   def valid_coordinates?
