@@ -4,8 +4,7 @@ RSpec.describe Commands::Quit do
   let(:image) { instance_double("Image") }
   let(:input) { double(:command) }
   let(:message) { "goodbye!\n" }
-
-  subject { described_class.new(input, image) }
+  let(:command) { described_class.new(input, image) }
 
   describe "#required_args" do
     it "has 0" do
@@ -15,7 +14,7 @@ RSpec.describe Commands::Quit do
 
   describe "#process" do
     it "returns message" do
-      expect { subject.process }.to output(message).to_stdout
+      expect { command.process }.to output(message).to_stdout
     end
   end
 end
