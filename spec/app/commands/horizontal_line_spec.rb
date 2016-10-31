@@ -10,7 +10,7 @@ RSpec.describe Commands::HorizontalLine do
 
   describe "#required_args" do
     it "has 4" do
-      expect(described_class.required_args).to eq 4
+      expect(described_class::REQUIRED_ARGS).to eq 4
     end
   end
   describe "#process" do

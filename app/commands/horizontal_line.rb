@@ -1,8 +1,6 @@
 module Commands
   class HorizontalLine < Base
-    def self.required_args
-      4
-    end
+    REQUIRED_ARGS = 4
 
     def initialize(start, stop, y, colour, image)
       @start = start

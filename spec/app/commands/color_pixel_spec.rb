@@ -9,7 +9,7 @@ RSpec.describe Commands::ColourPixel do
 
   describe "#required_args" do
     it "has 3" do
-      expect(described_class.required_args).to eq 3
+      expect(described_class::REQUIRED_ARGS).to eq 3
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Commands::ColourPixel do
           expect { command.process }.to raise_error(InvalidCoordinate)
         end
       end
-      
+
       context "invalid colour" do
         let(:x) { '4' }
         let(:y) { '4' }

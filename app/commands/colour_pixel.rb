@@ -1,8 +1,6 @@
 module Commands
   class ColourPixel < Base
-    def self.required_args
-      3
-    end
+    REQUIRED_ARGS = 3
 
     def initialize(x, y, colour, image)
       @x = x

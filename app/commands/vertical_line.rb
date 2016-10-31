@@ -1,8 +1,6 @@
 module Commands
   class VerticalLine < Base
-    def self.required_args
-      4
-    end
+    REQUIRED_ARGS = 4
 
     def initialize(x, start, stop, colour, image)
       @x = x

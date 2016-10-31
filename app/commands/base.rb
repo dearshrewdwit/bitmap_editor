@@ -3,11 +3,7 @@ module Commands
     ACCEPTED_COLOURS = ('A'..'Z').to_a.freeze
 
     def self.has_args?(input_args)
-      input_args == self.required_args
-    end
-
-    def self.required_args
-      0
+      input_args == self::REQUIRED_ARGS
     end
 
     def initialize(*parsed_input, image)

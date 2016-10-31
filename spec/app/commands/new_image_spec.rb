@@ -7,7 +7,7 @@ RSpec.describe Commands::NewImage do
 
   describe "#required_args" do
     it "has 2" do
-      expect(described_class.required_args).to eq 2
+      expect(described_class::REQUIRED_ARGS).to eq 2
     end
   end
   describe "#process" do

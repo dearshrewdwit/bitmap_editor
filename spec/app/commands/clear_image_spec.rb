@@ -9,7 +9,7 @@ RSpec.describe Commands::ClearImage do
 
   describe "#required_args" do
     it "has 0" do
-      expect(described_class.required_args).to eq 0
+      expect(described_class::REQUIRED_ARGS).to eq 0
     end
   end
   describe "#process" do

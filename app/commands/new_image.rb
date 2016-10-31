@@ -1,8 +1,6 @@
 module Commands
   class NewImage < Base
-    def self.required_args
-      2
-    end
+    REQUIRED_ARGS = 2
 
     def initialize(x, y, image)
       @x = x
