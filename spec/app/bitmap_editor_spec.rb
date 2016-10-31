@@ -5,16 +5,6 @@ RSpec.describe BitmapEditor do
 
   before { allow(STDIN).to receive(:gets).and_return(*input) }
 
-  context "'X' to quit" do
-    let(:input) { ['X'] }
-
-    it "user input ('X') is shown goodbye" do
-      expect(STDOUT).to receive(:puts).with('type ? for help')
-      expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
-    end
-  end
-
   context "'t' unrecognised command" do
     let(:input) { ['t', 'X'] }
 
@@ -26,7 +16,17 @@ RSpec.describe BitmapEditor do
     end
   end
 
-  context "'I' creates image" do
+  context "'X' to quit" do
+    let(:input) { ['X'] }
+
+    it "user input ('X') is shown goodbye" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
+    end
+  end
+
+  context "'I' new image" do
     let(:input) { ["I 3 4", 'X'] }
 
     it "does not output to STDOUT" do
@@ -46,10 +46,10 @@ RSpec.describe BitmapEditor do
     end
   end
 
-  context "'L' draws a horizontal_line" do
-    let(:input) { ["I 3 3", "L 3 3 P", 'X'] }
+  context "'H' draws a horizontal_line" do
+    let(:input) { ["I 3 3", "H 3 3 1 P", 'X'] }
 
-    it "prompts user" do
+    it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
       subject.run
@@ -57,10 +57,31 @@ RSpec.describe BitmapEditor do
   end
 
   context "'L' draws a vertical line" do
-    let(:input) { ["I 3 3", "L 3 3 P", 'X'] }
+    let(:input) { ["I 3 3", "V 1 3 3 P", 'X'] }
 
-    it "prompts user" do
+    it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
+    end
+  end
+
+  context "'C' clears image" do
+    let(:input) { ["I 3 3", "C", 'X'] }
+
+    it "does not output to STDOUT" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with('goodbye!')
+      subject.run
+    end
+  end
+
+  context "'S' shows image" do
+    let(:input) { ["I 3 3", "S", 'X'] }
+
+    it "use input('S') is shown image" do
+      expect(STDOUT).to receive(:puts).with('type ? for help')
+      expect(STDOUT).to receive(:puts).with(%w(OOO OOO OOO))
       expect(STDOUT).to receive(:puts).with('goodbye!')
       subject.run
     end
