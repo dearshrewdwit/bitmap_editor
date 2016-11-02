@@ -4,6 +4,7 @@ RSpec.describe Commands::ColourPixel do
   let(:size) { 4 }
   let(:first) { double(:first, size: size) }
   let(:current_image) { double(:current_image, first: first, size: size) }
+  let(:image) { instance_double("Image", current_image: current_image) }
   let(:input) { [x, y, colour] }
   let(:command) { described_class.new(*input, image) }
 
@@ -20,8 +21,6 @@ RSpec.describe Commands::ColourPixel do
       let(:colour) { 'P' }
 
       context "with current_image" do
-        let(:image) { instance_double("Image", current_image: current_image) }
-
         it "sends message to image with correct args" do
           expect(image).to receive(:colour_pixel).with(x.to_i-1, y.to_i-1, colour)
           command.process
@@ -38,8 +37,6 @@ RSpec.describe Commands::ColourPixel do
     end
 
     context "invalid input" do
-      let(:image) { instance_double("Image", current_image: current_image) }
-
       context "invalid coordinate" do
         let(:x) { '300' }
         let(:y) { '4' }

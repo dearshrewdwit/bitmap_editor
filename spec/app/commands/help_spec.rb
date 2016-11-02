@@ -13,7 +13,6 @@ H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 
 S - Show the contents of the current image
 X - Terminate the session\n"
   end
-
   let(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do

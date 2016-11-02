@@ -1,11 +1,15 @@
 require 'spec_helper'
 
 RSpec.describe Commands::HorizontalLine do
-
   let(:size) { 4 }
   let(:first) { double(:first, size: size) }
   let(:current_image) { double(:current_image, first: first, size: size) }
+  let(:image) { instance_double("Image", current_image: current_image) }
   let(:input) { [start, stop, y, colour] }
+  let(:start) { '1' }
+  let(:stop) { '4' }
+  let(:y) { '1' }
+  let(:colour) { 'P' }
   let(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do
@@ -15,14 +19,7 @@ RSpec.describe Commands::HorizontalLine do
   end
   describe "#process" do
     context "valid input" do
-      let(:start) { '1' }
-      let(:stop) { '4' }
-      let(:y) { '1' }
-      let(:colour) { 'P' }
-
       context "current_image present" do
-        let(:image) { instance_double("Image", current_image: current_image) }
-
         it "image receives message" do
           expect(image).to receive(:horizontal_line).with(0, 3, 0, 'P')
           command.process
@@ -41,10 +38,6 @@ RSpec.describe Commands::HorizontalLine do
     context "invalid input" do
       context "invalid coordinate" do
         let(:start) { '300' }
-        let(:stop) { '4' }
-        let(:y) { '1' }
-        let(:colour) { 'P' }
-        let(:image) { instance_double("Image", current_image: current_image) }
 
         it "raises error" do
           expect { command.process }.to raise_error(InvalidCoordinate)
@@ -52,11 +45,7 @@ RSpec.describe Commands::HorizontalLine do
       end
 
       context "invalid colour" do
-        let(:start) { '1' }
-        let(:stop) { '4' }
-        let(:y) { '1' }
         let(:colour) { 'P1234' }
-        let(:image) { instance_double("Image", current_image: current_image) }
 
         it "raises error" do
           expect { command.process }.to raise_error(InvalidColour)
