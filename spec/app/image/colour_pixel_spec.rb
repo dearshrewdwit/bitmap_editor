@@ -4,9 +4,9 @@ RSpec.describe "#colour_pixel" do
 
   context "node changes colour" do
     let(:expected_image) { [%w(O O), %w(O L)] }
+    before { image.new_image(2, 2) }
 
     it "returns expected image" do
-      image.new_image(2, 2)
       image.colour_pixel(1, 1, 'L')
       expect(image.current_image).to eq expected_image
     end
