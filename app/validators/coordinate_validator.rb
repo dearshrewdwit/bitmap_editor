@@ -15,13 +15,13 @@ class CoordinateValidator
   private
 
   def numbers_only?
-    !/\D/.match(x+y)
+    Integer(x+y) rescue false
   end
 
   def valid_coordinates?
     x_max = current_image ? current_image.first.size : MAX
     y_max = current_image ? current_image.size : MAX
-    x.to_i <= x_max && x.to_i >= MIN && y.to_i <= y_max && y.to_i >= MIN
+    x.to_i.between?(MIN, x_max) && y.to_i.between?(MIN, y_max)
   end
 
   attr_reader :x, :y, :current_image
