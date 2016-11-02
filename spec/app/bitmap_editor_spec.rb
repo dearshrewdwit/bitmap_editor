@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe BitmapEditor do
-  subject { described_class.new }
+  let(:bitmap_editor) { described_class.new }
 
   before { allow(STDIN).to receive(:gets).and_return(*input) }
 
@@ -12,7 +12,7 @@ RSpec.describe BitmapEditor do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with("unrecognised command 't' :(")
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe BitmapEditor do
     it "user input ('X') is shown goodbye" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.describe BitmapEditor do
     it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe BitmapEditor do
     it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe BitmapEditor do
     it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe BitmapEditor do
     it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe BitmapEditor do
     it "does not output to STDOUT" do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe BitmapEditor do
       expect(STDOUT).to receive(:puts).with('type ? for help')
       expect(STDOUT).to receive(:puts).with(%w(OOO OOO OOO))
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 
@@ -101,7 +101,7 @@ H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 
 S - Show the contents of the current image
 X - Terminate the session")
       expect(STDOUT).to receive(:puts).with('goodbye!')
-      subject.run
+      bitmap_editor.run
     end
   end
 end

@@ -2,14 +2,14 @@ require 'spec_helper'
 
 RSpec.describe CoordinateValidator do
 
-  subject { described_class.new(x, y) }
+  let(:validator) { described_class.new(x, y) }
 
   context "valid coordinates" do
     let(:x) { '3' }
     let(:y) { '4' }
 
     it "#valid? returns true" do
-      expect(subject).to be_valid
+      expect(validator).to be_valid
     end
   end
   context "invalid coordinates" do
@@ -18,7 +18,7 @@ RSpec.describe CoordinateValidator do
       let(:y) { '52' }
 
       it "#valid? returns false" do
-        expect(subject).to_not be_valid
+        expect(validator).to_not be_valid
       end
     end
     context "coordinates include non digit characters" do
@@ -26,7 +26,7 @@ RSpec.describe CoordinateValidator do
       let(:y) { '52' }
 
       it "#valid? returns false" do
-        expect(subject).to_not be_valid
+        expect(validator).to_not be_valid
       end
     end
     context "x is > 250" do
@@ -34,7 +34,7 @@ RSpec.describe CoordinateValidator do
       let(:y) { '4' }
 
       it "#valid? returns false" do
-        expect(subject).to_not be_valid
+        expect(validator).to_not be_valid
       end
     end
     context "x is < 1" do
@@ -42,7 +42,7 @@ RSpec.describe CoordinateValidator do
       let(:y) { '4' }
 
       it "#valid? returns false" do
-        expect(subject).to_not be_valid
+        expect(validator).to_not be_valid
       end
     end
     context "y is > 250" do
@@ -50,7 +50,7 @@ RSpec.describe CoordinateValidator do
       let(:y) { '300' }
 
       it "#valid? returns false" do
-        expect(subject).to_not be_valid
+        expect(validator).to_not be_valid
       end
     end
     context "y is < 1" do
@@ -58,7 +58,7 @@ RSpec.describe CoordinateValidator do
       let(:y) { '-2' }
 
       it "#valid? returns false" do
-        expect(subject).to_not be_valid
+        expect(validator).to_not be_valid
       end
     end
   end
