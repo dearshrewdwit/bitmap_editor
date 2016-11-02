@@ -1,64 +1,79 @@
 require 'spec_helper'
 
 RSpec.describe CoordinateValidator do
-
+  let(:x) { '4' }
+  let(:y) { '4' }
   let(:validator) { described_class.new(x, y) }
 
-  context "valid coordinates" do
-    let(:x) { '3' }
-    let(:y) { '4' }
+  context "no current_image" do
+    context "valid coordinate" do
+      it "#valid? returns true" do
+        expect(validator).to be_valid
+      end
+    end
+    context "invalid coordinates" do
+      context "not integer coordinates" do
+        let(:x) { '2.4' }
 
-    it "#valid? returns true" do
-      expect(validator).to be_valid
+        it "#valid? returns false" do
+          expect(validator).to_not be_valid
+        end
+      end
+      context "coordinates include non digit characters" do
+        let(:x) { '24t' }
+
+        it "#valid? returns false" do
+          expect(validator).to_not be_valid
+        end
+      end
+      context "x is > 250" do
+        let(:x) { '252' }
+
+        it "#valid? returns false" do
+          expect(validator).to_not be_valid
+        end
+      end
+      context "x is < 1" do
+        let(:x) { '0' }
+
+        it "#valid? returns false" do
+          expect(validator).to_not be_valid
+        end
+      end
+      context "y is > 250" do
+        let(:y) { '300' }
+
+        it "#valid? returns false" do
+          expect(validator).to_not be_valid
+        end
+      end
+      context "y is < 1" do
+        let(:y) { '-2' }
+
+        it "#valid? returns false" do
+          expect(validator).to_not be_valid
+        end
+      end
     end
   end
-  context "invalid coordinates" do
-    context "not integer coordinates" do
-      let(:x) { '2.4' }
-      let(:y) { '52' }
 
+  context "uses current_image" do
+    let(:size) { 2 }
+    let(:first) { double(:first, size: size) }
+    let(:current_image) { double(:current_image, first: first, size: size) }
+    let(:validator) { described_class.new(x, y, current_image) }
+
+    context "boundaries are set from current_image" do
       it "#valid? returns false" do
         expect(validator).to_not be_valid
       end
     end
-    context "coordinates include non digit characters" do
-      let(:x) { '24t' }
-      let(:y) { '52' }
+    context "valid coordinate" do
+      let(:x) { '2' }
+      let(:y) { '2' }
 
-      it "#valid? returns false" do
-        expect(validator).to_not be_valid
-      end
-    end
-    context "x is > 250" do
-      let(:x) { '252' }
-      let(:y) { '4' }
-
-      it "#valid? returns false" do
-        expect(validator).to_not be_valid
-      end
-    end
-    context "x is < 1" do
-      let(:x) { '0' }
-      let(:y) { '4' }
-
-      it "#valid? returns false" do
-        expect(validator).to_not be_valid
-      end
-    end
-    context "y is > 250" do
-      let(:x) { '4' }
-      let(:y) { '300' }
-
-      it "#valid? returns false" do
-        expect(validator).to_not be_valid
-      end
-    end
-    context "y is < 1" do
-      let(:x) { '45' }
-      let(:y) { '-2' }
-
-      it "#valid? returns false" do
-        expect(validator).to_not be_valid
+      it "#valid? returns true" do
+        expect(validator).to be_valid
       end
     end
   end
