@@ -1,77 +1,48 @@
 require 'spec_helper'
 
 RSpec.describe CommandHandler do
-
   let(:image) { instance_double("Image") }
-  let(:handler) { described_class.new(input, image) }
 
-  context "invalid command" do
-    let(:input) { "rf" }
-    it "Invalid Command" do
-      expect { handler.process }.to raise_error(InvalidCommand)
-    end
+  subject(:handler) { described_class.new(input, image) }
 
-  end
-  context "correct command, invalid parameters" do
-    let(:input) { "X J" }
-    it "Invalid parameters" do
-      expect { handler.process }.to raise_error(InvalidParameters)
+  invalid_input = {
+    InvalidCommand => "rf",
+    InvalidParameters => "X J",
+  }
+
+  valid_input = {
+    Commands::Quit => "X",
+    Commands::Help => "?",
+    Commands::ShowImage => "S",
+    Commands::HorizontalLine => "H 1 1 1 P",
+    Commands::VerticalLine => "V 1 1 1 P",
+    Commands::ColourPixel => "L 1 1 P",
+    Commands::ClearImage => "C",
+    Commands::NewImage => "I 1 1",
+  }
+
+  context "invalid input" do
+    invalid_input.each do |error, input|
+      context "#{error}" do
+        let(:input) { input }
+
+        it "raises error" do
+          expect { handler.process }.to raise_error(error)
+        end
+      end
     end
   end
-  context "Quit" do
-  let(:input) { "X" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::Quit).to receive(:process)
-      handler.process
-    end
-  end
-  context "Help" do
-  let(:input) { "?" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::Help).to receive(:process)
-      handler.process
-    end
-  end
-  context "Show Image" do
-  let(:input) { "S" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::ShowImage).to receive(:process)
-      handler.process
-    end
-  end
-  context "Horizontal Line" do
-  let(:input) { "H 1 1 1 P" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::HorizontalLine).to receive(:process)
-      handler.process
-    end
-  end
-  context "Vertical Line" do
-  let(:input) { "V 1 1 1 P" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::VerticalLine).to receive(:process)
-      handler.process
-    end
-  end
-  context "Colour Pixel" do
-  let(:input) { "L 1 1 P" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::ColourPixel).to receive(:process)
-      handler.process
-    end
-  end
-  context "Clear Image" do
-  let(:input) { "C" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::ClearImage).to receive(:process)
-      handler.process
-    end
-  end
-  context "New Image" do
-  let(:input) { "I 1 1" }
-    it "correct command retrieved and processed" do
-      expect_any_instance_of(Commands::NewImage).to receive(:process)
-      handler.process
+
+  context "valid command input" do
+    valid_input.each do |command, input|
+      context "#{command}" do
+        let(:input) { input }
+
+        it "correct command retrieved and processed" do
+          expect_any_instance_of(command).to receive(:process)
+          handler.process
+        end
+      end
     end
   end
 end

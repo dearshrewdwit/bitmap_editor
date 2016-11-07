@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe Commands::HorizontalLine do
-
   let(:size) { 4 }
   let(:first) { double(:first, size: size) }
   let(:current_image) { double(:current_image, first: first, size: size) }
@@ -11,7 +10,8 @@ RSpec.describe Commands::HorizontalLine do
   let(:start) { '1' }
   let(:stop) { '4' }
   let(:colour) { 'P' }
-  let(:command) { described_class.new(*input, image) }
+
+  subject(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do
     it "has 4" do

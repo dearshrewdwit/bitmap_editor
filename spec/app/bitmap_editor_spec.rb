@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe BitmapEditor do
-  let(:bitmap_editor) { described_class.new }
+  subject(:bitmap_editor) { described_class.new }
 
   before { allow(STDIN).to receive(:gets).and_return(*input) }
 

@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe Commands::ClearImage do
-
   let(:size) { 4 }
   let(:first) { double(:first, size: size) }
   let(:current_image) { double(:current_image, first: first, size: size) }
-  let(:command) { described_class.new(image) }
+  
+  subject(:command) { described_class.new(image) }
 
   describe "#required_args" do
     it "has 0" do

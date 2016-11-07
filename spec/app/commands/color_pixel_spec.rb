@@ -6,7 +6,8 @@ RSpec.describe Commands::ColourPixel do
   let(:current_image) { double(:current_image, first: first, size: size) }
   let(:image) { instance_double("Image", current_image: current_image) }
   let(:input) { [x, y, colour] }
-  let(:command) { described_class.new(*input, image) }
+
+  subject(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do
     it "has 3" do

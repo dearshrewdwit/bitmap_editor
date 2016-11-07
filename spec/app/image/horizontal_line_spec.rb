@@ -1,6 +1,7 @@
 require 'spec_helper'
-RSpec.describe "#horizontal_line" do
-  let(:image) { Image.new }
+
+RSpec.describe Image do
+  subject(:image) { described_class.new }
 
   context "nodes change colour" do
     let(:expected_image) { [%w(O O), %w(L L)] }

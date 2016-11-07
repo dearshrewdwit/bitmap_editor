@@ -4,7 +4,8 @@ RSpec.describe Commands::Quit do
   let(:image) { instance_double("Image") }
   let(:input) { double(:command) }
   let(:message) { "goodbye!\n" }
-  let(:command) { described_class.new(input, image) }
+
+  subject(:command) { described_class.new(input, image) }
 
   describe "#required_args" do
     it "has 0" do

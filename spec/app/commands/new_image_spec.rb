@@ -5,7 +5,8 @@ RSpec.describe Commands::NewImage do
   let(:input) { [x, y] }
   let(:x) { '4' }
   let(:y) { '4' }
-  let(:command) { described_class.new(*input, image) }
+
+  subject(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do
     it "has 2" do

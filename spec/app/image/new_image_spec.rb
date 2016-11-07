@@ -1,13 +1,13 @@
 require 'spec_helper'
-RSpec.describe "#new_image" do
-  let(:image) { Image.new }
+
+RSpec.describe Image do
+  subject(:image) { described_class.new }
 
   context "initializes with no current image" do
     it "is nil" do
       expect(image.current_image).to be_nil
     end
   end
-
   context "new 2x2 image" do
     let(:expected_image) { [%w(O O), %w(O O)] }
     it "current_image is 2x2" do

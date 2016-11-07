@@ -1,6 +1,8 @@
 require 'spec_helper'
-RSpec.describe "#show_image" do
-  let(:image) { Image.new }
+
+RSpec.describe Image do
+  subject(:image) { described_class.new }
+  
   before { image.new_image(3, 3) }
 
   it "outputs correctly to STDOUT" do

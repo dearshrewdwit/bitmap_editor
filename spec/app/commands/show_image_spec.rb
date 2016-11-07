@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Commands::ShowImage do
-
   let(:input) { ['S'] }
-  let(:command) { described_class.new(*input, image) }
+
+  subject(:command) { described_class.new(*input, image) }
 
   describe "#required_args" do
     it "has 0" do

@@ -1,6 +1,7 @@
 require 'spec_helper'
-RSpec.describe "#colour_pixel" do
-  let(:image) { Image.new }
+
+RSpec.describe Image do
+  subject(:image) { described_class.new }
 
   context "node changes colour" do
     let(:expected_image) { [%w(O O), %w(O L)] }
