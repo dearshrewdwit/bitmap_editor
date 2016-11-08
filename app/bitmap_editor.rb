@@ -1,9 +1,8 @@
 class BitmapEditor
 
-  attr_reader :handler
-  def initialize(handler = CommandHandler)
-    @image = ImageHandler.new
-    @handler = handler
+  def initialize
+    @image_handler = ImageHandler.new
+    @command_handler = CommandHandler
   end
 
   def run
@@ -14,10 +13,14 @@ class BitmapEditor
       input = STDIN.gets.chomp
       running = false if input == 'X'
     begin
-      handler.new(input, @image).process
+      command_handler.new(input, image_handler).process
     rescue BitmapError => e
       puts e.message
     end
     end
   end
+
+  private
+
+  attr_reader :command_handler, :image_handler
 end
