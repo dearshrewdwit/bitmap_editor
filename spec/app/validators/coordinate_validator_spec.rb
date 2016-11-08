@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe CoordinateValidator do
   let(:x) { '4' }
   let(:y) { '4' }
-  subject(:validator) { described_class.new(x, y) }
+  subject(:validator) { described_class.new(x, y,  nil) }
 
   context "no current_image" do
     context "valid coordinate" do
@@ -58,10 +58,10 @@ RSpec.describe CoordinateValidator do
   end
 
   context "uses current_image" do
-    let(:size) { 2 }
-    let(:first) { double(:first, size: size) }
-    let(:current_image) { double(:current_image, first: first, size: size) }
-    let(:validator) { described_class.new(x, y, current_image) }
+    let(:image) { instance_double("Image", row_size: 2, column_size: 2) }
+
+    subject(:validator) { described_class.new(x, y, image) }
+
 
     context "boundaries are set from current_image" do
       it "#valid? returns false" do

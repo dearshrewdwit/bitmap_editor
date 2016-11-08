@@ -6,18 +6,22 @@ module Commands
       input_args == self::REQUIRED_ARGS
     end
 
-    def initialize(*parsed_input, image)
-      @image = image
+    def initialize(*parsed_input, handler)
+      @handler = handler
     end
 
-    def valid_coordinate?(x, y, new_image = false)
-      current_image = new_image ? false : image.current_image
-      CoordinateValidator.new(x, y, current_image).valid?
+    def valid_coordinate?(x, y)
+      CoordinateValidator.new(x, y, image).valid?
     end
 
     def to_c(s)
       s.to_i - 1
     end
-    attr_reader :image, :x ,:y, :colour, :start, :stop
+
+    def image
+      handler.image
+    end
+
+    attr_reader :handler, :x ,:y, :colour, :start, :stop
   end
 end

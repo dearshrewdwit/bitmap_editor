@@ -2,16 +2,15 @@ require 'spec_helper'
 
 RSpec.describe Commands::HorizontalLine do
   let(:size) { 4 }
-  let(:first) { double(:first, size: size) }
-  let(:current_image) { double(:current_image, first: first, size: size) }
-  let(:image) { instance_double("Image", current_image: current_image) }
+  let(:image) { instance_double("Image", row_size: size, column_size: size) }
+  let(:handler) { instance_double("ImageHandler", image: image) }
   let(:input) { [start, stop, y, colour] }
   let(:start) { '1' }
   let(:stop) { '4' }
   let(:y) { '1' }
   let(:colour) { 'P' }
 
-  subject(:command) { described_class.new(*input, image) }
+  subject(:command) { described_class.new(*input, handler) }
 
   describe "#required_args" do
     it "has 4" do
@@ -22,13 +21,13 @@ RSpec.describe Commands::HorizontalLine do
     context "valid input" do
       context "current_image present" do
         it "image receives message" do
-          expect(image).to receive(:horizontal_line).with(0, 3, 0, 'P')
+          expect(handler).to receive(:horizontal_line).with(0, 3, 0, 'P')
           command.process
         end
       end
 
       context "no current_image" do
-        let(:image) { instance_double("Image", current_image: false) }
+        let(:handler) { instance_double("ImageHandler", image: nil) }
 
         it "command raises error" do
           expect { command.process }.to raise_error(NoImage)

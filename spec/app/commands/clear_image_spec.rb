@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe Commands::ClearImage do
-  let(:size) { 4 }
-  let(:first) { double(:first, size: size) }
-  let(:current_image) { double(:current_image, first: first, size: size) }
-  
-  subject(:command) { described_class.new(image) }
+  let(:size) { 2 }
+  let(:image) { instance_double("Image", row_size: size, column_size: size) }
+  let(:handler) { instance_double("ImageHandler", image: image) }
+
+  subject(:command) { described_class.new(handler) }
 
   describe "#required_args" do
     it "has 0" do
@@ -13,15 +13,14 @@ RSpec.describe Commands::ClearImage do
     end
   end
   describe "#process" do
-    context "current_image present" do
-    let(:image) { instance_double("Image", current_image: current_image) }
+    context "image present" do
       it "image receives message" do
-        expect(image).to receive(:new_image).with(size, size)
+        expect(handler).to receive(:new_image).with(size, size)
         command.process
       end
     end
-    context "no current_image" do
-    let(:image) { instance_double("Image", current_image: false) }
+    context "no image" do
+    let(:handler) { instance_double("ImageHandler", image: nil) }
       it "command raises error" do
         expect { command.process }.to raise_error(NoImage)
       end

@@ -2,7 +2,7 @@ class BitmapEditor
 
   attr_reader :handler
   def initialize(handler = CommandHandler)
-    @image = Image.new
+    @image = ImageHandler.new
     @handler = handler
   end
 

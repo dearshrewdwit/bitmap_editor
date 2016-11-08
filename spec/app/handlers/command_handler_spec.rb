@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe CommandHandler do
-  let(:image) { instance_double("Image") }
+  let(:image_handler) { instance_double("ImageHandler") }
 
-  subject(:handler) { described_class.new(input, image) }
+  subject(:command_handler) { described_class.new(input, image_handler) }
 
   invalid_input = {
     InvalidCommand => "rf",
@@ -27,7 +27,7 @@ RSpec.describe CommandHandler do
         let(:input) { input }
 
         it "raises error" do
-          expect { handler.process }.to raise_error(error)
+          expect { command_handler.process }.to raise_error(error)
         end
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe CommandHandler do
 
         it "correct command retrieved and processed" do
           expect_any_instance_of(command).to receive(:process)
-          handler.process
+          command_handler.process
         end
       end
     end
