@@ -62,7 +62,6 @@ RSpec.describe CoordinateValidator do
 
     subject(:validator) { described_class.new(x, y, image) }
 
-
     context "boundaries are set from current_image" do
       it "#valid? returns false" do
         expect(validator).to_not be_valid
