@@ -3,7 +3,7 @@ module Commands
     REQUIRED_ARGS = 0
 
     def process
-      fail NoImage unless handler.image
+      fail NoImage unless image
       handler.show_image
     end
   end

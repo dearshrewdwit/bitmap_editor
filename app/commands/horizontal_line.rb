@@ -11,7 +11,7 @@ module Commands
     end
 
     def process
-      fail NoImage unless handler.image
+      fail NoImage unless image
       fail InvalidCoordinate unless valid_coordinate?(start, y) && valid_coordinate?(stop, y)
       fail InvalidColour unless ACCEPTED_COLOURS.include?(colour)
       handler.horizontal_line(to_c(start), to_c(stop), to_c(y), colour)

@@ -10,7 +10,7 @@ module Commands
     end
 
     def process
-      fail NoImage unless handler.image
+      fail NoImage unless image
       fail InvalidCoordinate unless valid_coordinate?(x, y)
       fail InvalidColour unless ACCEPTED_COLOURS.include?(colour)
       handler.colour_pixel(to_c(x), to_c(y), colour)

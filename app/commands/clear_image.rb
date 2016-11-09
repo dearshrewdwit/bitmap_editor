@@ -3,7 +3,7 @@ module Commands
     REQUIRED_ARGS = 0
 
     def process
-      fail NoImage unless handler.image
+      fail NoImage unless image
       x = image.row_size
       y = image.column_size
       handler.new_image(x, y)
